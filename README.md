@@ -8,6 +8,7 @@
 
 
 ３）JDKインストール先のパスを環境変数に登録.
+
     [vi /etc/profile] or [vi ~/.bash_profile]
 
   >一番下に、以下を追加
@@ -16,6 +17,7 @@
 
 
 ４）origin/binの環境をコピー + シェル権限付与.
+
     /var/bin/origin
 
     chmod 755 /var/bin/origin/sh/*
@@ -49,14 +51,17 @@
 
 
 ７）サーバ起動.
+
     .\\origin
 
 
 ８）サーバ停止.
+
     .\\odown
 
 
 
 サーバを起動した場合、ポートがデフォルト値のままならば、以下のURLでJSON結果が返却される.
+
     http://localhost:3333/
 
