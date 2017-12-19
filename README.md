@@ -8,18 +8,17 @@
 
 ２）JDKインストール
 
+
 ３）JDKインストール先のパスを環境変数に登録.
+  >[vi /etc/profile] or [vi ~/.bash_profile]
 
-　>[vi /etc/profile] or [vi ~/.bash_profile]
+  一番下に、以下を追加
 
-　>一番下に、以下を追加
-
-　　export JAVA_HOME=JDKインストール先
+    export JAVA_HOME=JDKインストール先
 
 
 ４）origin/binの環境をコピー + シェル権限付与.
-
-　>/var/bin/origin
+  >/var/bin/origin
 
   >chmod 755 /var/bin/origin/sh/*
 
@@ -28,44 +27,38 @@
 
 ５）環境変数「ORIGIN_HOME」を設定
 
-　>[vi /etc/profile] or [vi ~/.bash_profile]
+  >[vi /etc/profile] or [vi ~/.bash_profile]
 
-　>一番下に、以下を追加
+  一番下に、以下を追加
 
-　　export ORIGIN_HOME=/var/bin/origin
+    export ORIGIN_HOME=/var/bin/origin
 
-　　export PATH=${PATH}:ORIGIN_HOME/sh
+    export PATH=${PATH}:ORIGIN_HOME/sh
 
 
 ６）新しいoriginプロジェクトを作成.
 
-　※newProjectフォルダは任意のフォルダ名を設定.
+  ※newProjectフォルダは任意のフォルダ名を設定.
 
-　>mkdir /var/project/newProject
+  >mkdir /var/project/newProject
 
-　>cd newProject
+  >cd newProject
 
-　>oproj sqlite
+  >oproj sqlite
 
 
-　※sqliteの組み込みDBを新規プロジェクトで導入.
+  ※sqliteの組み込みDBを新規プロジェクトで導入.
 
 
 ７）サーバ起動.
-
-　>origin
+  >.\\origin
 
 
 ８）サーバ停止.
-
-　>odown
-
+  >.\\odown
 
 
 
 サーバを起動した場合、ポートがデフォルト値のままならば、以下のURLでJSON結果が返却される.
-
-
-http://localhost:3333/
-
+  >http://localhost:3333/
 
