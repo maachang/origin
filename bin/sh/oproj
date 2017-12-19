@@ -1,0 +1,64 @@
+#!/bin/sh
+################################################################################
+# origin new project
+################################################################################
+ARGS=${*}
+
+################################################################################
+# Please set up environment.
+################################################################################
+
+# java home.
+export JAVA_HOME=${JAVA_HOME}
+
+# project directory.
+PROJ_DIR=.
+
+# java option.
+OPT=
+
+# firstMemory.
+STM=128
+
+# maxMemory.
+EXM=128
+
+################################################################################
+# Please define execution conditions.
+################################################################################
+
+# execution package.
+EXEC_PACKAGE=origin.OriginProject
+
+# my jar.
+MY_JAR=
+
+
+
+################################################################################
+# The point does not change from here.
+################################################################################
+BASE_HOME=${ORIGIN_HOME}
+
+# batch dir.
+BATCH_DIR=${BASE_HOME}/sh
+
+# library directory.
+LIB_DIR=${BASE_HOME}/lib
+
+# my jar ++.
+MY_JAR=${MY_JAR}:`sh ${BATCH_DIR}/core/classpath.sh ${LIB_DIR}`
+MY_JAR=${MY_JAR}:`sh ${BATCH_DIR}/core/classpath.sh ${LIB_DIR}/components`
+
+# execution java.
+cd ${PROJ_DIR}
+${JAVA_HOME}/bin/java -server -Xms${STM}m -Xmx${EXM}m ${OPT} -classpath ${PROPERTY_DIR}:${MY_JAR} ${EXEC_PACKAGE} ${ARGS}
+
+chmod 755 origin
+chmod 755 ocon
+chmod 755 osql
+chmod 755 otest
+
+exit 0
+
+

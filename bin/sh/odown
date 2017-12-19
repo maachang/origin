@@ -1,0 +1,61 @@
+#!/bin/sh
+################################################################################
+# stop origin.
+################################################################################
+ARGS=${*}
+
+################################################################################
+# Please set up environment.
+################################################################################
+
+# java home.
+export JAVA_HOME=${JAVA_HOME}
+
+# project directory.
+PROJ_DIR=.
+
+# java option.
+OPT=
+
+# firstMemory.
+STM=32
+
+# maxMemory.
+EXM=32
+
+################################################################################
+# Please define execution conditions.
+################################################################################
+
+# execution package.
+EXEC_PACKAGE=origin.OriginDown
+
+# my jar.
+MY_JAR=
+
+
+
+################################################################################
+# The point does not change from here.
+################################################################################
+BASE_HOME=${ORIGIN_HOME}
+
+# batch dir.
+BATCH_DIR=${BASE_HOME}/sh
+
+# library directory.
+LIB_DIR=${BASE_HOME}/lib
+
+# property directory ++.
+PROPERTY_DIR=${PROJ_DIR}/conf
+
+# my jar ++.
+MY_JAR=${MY_JAR}:`sh ${BATCH_DIR}/core/classpath.sh ${LIB_DIR}`
+MY_JAR=${MY_JAR}:`sh ${BATCH_DIR}/core/classpath.sh ${LIB_DIR}/components`
+
+# execution java.
+cd ${PROJ_DIR}
+${JAVA_HOME}/bin/java -server -Xms${STM}m -Xmx${EXM}m ${OPT} -classpath ${PROPERTY_DIR}:${MY_JAR} ${EXEC_PACKAGE} ${ARGS}
+
+exit 0
+

@@ -1,0 +1,35 @@
+#!/bin/bash
+################################################################################
+# daemon origin.
+################################################################################
+
+OSTART=./ohttp
+OEND=odown
+
+ostartup() {
+    echo "*** Starting origin |>(>ﾟ)"
+    sh ${OSTART} > /dev/null &
+}
+
+oshutdown() {
+    echo "*** Shutdown origin (ﾟ<)<|"
+    ${OEND}
+}
+
+case "$1" in
+'start')
+        ostartup
+        ;;
+'stop')
+        oshutdown
+        ;;
+
+'restart')
+        oshutdown
+        ostartup
+        ;;
+*)
+        echo "Usage: $0 {start stop restart}"
+        ;;
+esac
+exit 0

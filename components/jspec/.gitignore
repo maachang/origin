@@ -1,0 +1,15 @@
+# Java
+*.war
+*.ear
+
+# Eclipse
+.project
+.classpath
+.settings
+
+# httpPush
+.httpPushData
+logout.log*
+
+project/classes
+jspec-*.jar

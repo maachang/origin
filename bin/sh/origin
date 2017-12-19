@@ -1,0 +1,101 @@
+#!/bin/sh
+################################################################################
+# startup origin
+################################################################################
+ARGS=${*}
+
+################################################################################
+# Please set up environment.
+################################################################################
+
+# java home.
+export JAVA_HOME=${JAVA_HOME}
+
+# project directory.
+PROJ_DIR=.
+
+# java option.
+OPT=
+
+# firstMemory.
+STM=256
+
+# maxMemory.
+EXM=256
+
+# CompileThreshold(size).
+CTHREAD=1800
+
+
+################################################################################
+# Please define execution conditions.
+################################################################################
+
+# execution package.
+EXEC_PACKAGE=origin.Origin
+
+# my jar.
+MY_JAR=
+
+# logconf name.
+# default(log4j.xml).
+LOGCONF=
+
+
+
+################################################################################
+# The point does not change from here.
+################################################################################
+BASE_HOME=${ORIGIN_HOME}
+
+# logconf name.
+if [ ${LOGCONF:--1} = "-1" ];
+then
+    LOGCONF=log4j.xml
+fi
+
+LOGCONF=${PROJ_DIR}/conf/${LOGCONF}
+
+# batch dir.
+BATCH_DIR=${BASE_HOME}/sh
+
+# library directory.
+LIB_DIR=${BASE_HOME}/lib
+
+# library directory.
+JAR_DIR=jar
+
+# property directory ++.
+PROPERTY_DIR=${PROJ_DIR}/conf
+
+# my jar ++.
+MY_JAR=${MY_JAR}:`sh ${BATCH_DIR}/core/classpath.sh ${LIB_DIR}`
+MY_JAR=${MY_JAR}:`sh ${BATCH_DIR}/core/classpath.sh ${LIB_DIR}/components`
+MY_JAR=${MY_JAR}:`sh ${BATCH_DIR}/core/classpath.sh ${JAR_DIR}`
+
+# java option.
+OPT="${OPT} -Dlog4j.configuration=file:${LOGCONF}"
+#OPT="${OPT} -Djava.nio.channels.spi.SelectorProvider=sun.nio.ch.EPollSelectorProvider"
+OPT="${OPT} -Djava.awt.headless=true"
+OPT="${OPT} -Djava.net.preferIPv4Stack=true"
+
+#OPT="${OPT} -XX:+UseOnStackReplacement -XX:+UseCompilerSafepoints"
+#OPT="${OPT} -XX:+UseParallelGC -XX:+UseParallelOldGC -XX:+UseBiasedLocking"
+#OPT="${OPT} -XX:CompileThreshold=${CTHREAD}"
+
+# malloc change.
+#CHANGE_MALLOC=/usr/local/lib/libjemalloc.so.1
+#CHANGE_MALLOC=/usr/local/lib/libjemalloc.so.2
+
+# execution java.
+cd ${PROJ_DIR}
+
+echo start origin.
+if [ ${CHANGE_MALLOC:--1} = "-1" ];
+then
+    ${JAVA_HOME}/bin/java -server -Xms${STM}m -Xmx${EXM}m ${OPT} -classpath ${PROPERTY_DIR}:${MY_JAR} ${EXEC_PACKAGE} ${ARGS}
+else
+    LD_PRELOAD=${CHANGE_MALLOC} ${JAVA_HOME}/bin/java -server -Xms${STM}m -Xmx${EXM}m ${OPT} -classpath ${PROPERTY_DIR}:${MY_JAR} ${EXEC_PACKAGE} ${ARGS}
+fi
+
+exit 0
